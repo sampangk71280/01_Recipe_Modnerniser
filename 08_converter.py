@@ -69,6 +69,7 @@ while keep_going  == "":
     # Get unit and change it to match dictionary
     unit = unit_checker()
 
-    amount = general_converter(amount, unit. unit_central, 1)
+    amount = general_converter(amount, unit, unit_central, 1)
+    print(amount)
 
     keep_going = input("<enter> or q")

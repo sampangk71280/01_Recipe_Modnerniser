@@ -79,7 +79,7 @@ while stop != "xxx":
         amount = float(amount) * scale_factor
 
         # Remove decimal point for whole numbers
-        if amount %1 == 0:
+        if amount % 1 == 0:
             amount = int(amount)
         # Multiplies decimal numbers by 10 to get something like 0.5
         elif amount * 10 % 1 == 0:
