@@ -28,7 +28,7 @@ def not_blank(question, error_msg, num_ok):
 # Main Routine...
 
 # Set up empty ingredient list
-ingredients = []
+all_ingredients = []
 # Loop to ask users to enter an ingredient
 stop = ""
 while stop != "xxx":
@@ -39,15 +39,15 @@ while stop != "xxx":
 
     # Stop looping if exit code is type and there are more
     # than 2 ingredients...
-    if get_ingredient.lower() == "xxx" and len(ingredients) > 1:
+    if get_ingredient.lower() == "xxx" and len(all_ingredients) > 1:
         break
-    elif get_ingredient.lower() == "xxx" and len(ingredients) <2:
+    elif get_ingredient.lower() == "xxx" and len(all_ingredients) <2:
         print("You need a lot two ingredient in the list."
               "Please add more ingredients.")
 
     # If exit code is not entered, add ingredient to list
     else:
-        ingredients.append(get_ingredient)
+        all_ingredients.append(get_ingredient)
 
 # Output list
 print(ingredients)

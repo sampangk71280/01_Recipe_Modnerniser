@@ -36,15 +36,22 @@ for recipe_line in full_recipe:
         get_amount = recipe_line.split(" ", 1) # split line at first space
 
         try:
-            amount = eval(get_amount[0]) # convert amount to float if possible
+            amount = eval(get_amount[0]) # conv ert amount to float if possible
         except NameError:
             amount = get_amount [0]
-            convert = "no"
+            modernised_recipe.append(recipe_line)
+            continue
+
 
         unit_ingredient = get_amount[1]
 
+    # Get unit and ingredient...
     get_unit = unit_ingredient.split(" ", 1) # splits text at first space
     unit = get_unit[0]
+    # convert to ml
     ingredient = get_unit[1]
+    # convert into g
 
     print("{} {} {}".format(amount, unit, ingredient))
+
+# Put updated ingredient in list
