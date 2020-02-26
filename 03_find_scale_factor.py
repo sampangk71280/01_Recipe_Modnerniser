@@ -24,14 +24,13 @@ def num_check(question):
         except ValueError:
             print(error)
 
-
-
+serving_size = num_check("What is the recipe serving size?")
 
 # Main routine goes here
 dodgy_sf = "yes"
 while dodgy_sf == "yes":
 
-    serving_size = num_check("What is the recipe serving size?")
+
     desired_size = num_check("How many servings are needed?")
 
     scale_factor = desired_size / serving_size
