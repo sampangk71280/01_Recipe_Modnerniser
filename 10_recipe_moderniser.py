@@ -48,13 +48,13 @@ def num_check(question):
             print(error)
 
 def get_sf():
-    serving_size = num_check("What is the recipe serving size?")
+    serving_size = num_check("What is the recipe serving size? ")
 
     # Main routine goes here
     dodgy_sf = "yes"
     while dodgy_sf == "yes":
 
-        desired_size = num_check("How many servings are needed?")
+        desired_size = num_check("How many servings are needed? ")
 
         scale_factor = desired_size / serving_size
 
@@ -84,7 +84,7 @@ def get_all_ingredients():
           "you done.")
     while stop != "xxx":
         # Ask user for ingredient (via not blank function)
-        get_ingredient = not_blank("Recipe Line ",
+        get_ingredient = not_blank("Recipe Line: ",
                                    "This can't be blank",
                                    "yes")
 
@@ -108,6 +108,7 @@ def get_all_ingredients():
 # set up Dictionaries
 
 # set up list to hold 'modernised' ingredients
+modernised_recipe = []
 
 # ask user for recipe name and check its not blank
 recipe_name = not_blank("Where is the recipe name? ",
@@ -141,6 +142,7 @@ for recipe_line in full_recipe:
         amount = mixed_num.replace(" ", "+")
         # Change the string into a decimal
         amount = eval(amount)
+        amount = amount * scale_factor
 
         # Get unit and ingredient
         compile_regex = re.compile(mixed_regex)
@@ -163,13 +165,25 @@ for recipe_line in full_recipe:
 
     # Get unit and ingredient...
     get_unit = unit_ingredient.split(" ", 1) # splits text at first space
+
     unit = get_unit[0]
     # convert to ml
-    ingredient = get_unit[1]
-    # convert into g
 
-    print("{} {} {}".format(amount, unit, ingredient))
+    num_space = recipe_line.count(" ")
+    if num_space > 1:
+        ingredient = get_unit[1]
+        # convert into g
+    else:
+        modernised_recipe.append("{} {}".format(amount, unit_ingredient))
+        continue
 
+    modernised_recipe.append("{} {} {}".format(amount, unit, ingredient))
+
+ # Put updated ingredient in list
+
+# Output ingredient list
+for item in modernised_recipe:
+    print(item)
 
 # Loop for each ingredient ...
 
