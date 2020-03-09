@@ -1,4 +1,6 @@
 # modules to be used...
+
+# *USABILITY* TESTING AND SHARING VIDEO
 import csv
 import re
 
@@ -106,21 +108,21 @@ def get_all_ingredients():
 def general_converter(how_much, lookup, dictionary, conversion_factor):
 
     if lookup in dictionary:
-        mult_by = dictionary.get(unit)
-        how_much = how_much * mult_by * conversion_factor
+        mult_by = dictionary.get(lookup)
+        how_much = how_much * float(mult_by) / conversion_factor
         converted = "yes"
     else:
         converted = "no"
 
     return [how_much, converted]
 
-def unit_checker():
+def unit_checker(raw_unit):
 
-    unit_tocheck = input("Unit? ")
+    unit_tocheck = raw_unit
 
     # Abbreviation lists
     teaspoon = ["tsp", "teaspoon", "t", "teaspoons"]
-    tablespoon = ["tbs", "tablespoon", "T" "tbsp", "tablespoons"]
+    tablespoon = ["tbs", "tablespoon", "T" "tbsp", "tablespoons", "Tbsp"]
     ounce = ["oz", "fluid-ounce", "fl-oz", "ounces"]
     cup = ["cup", "c", "cups"]
     pint = ["pint", "p", "pt", "fl-pt", "pints"]
@@ -134,8 +136,7 @@ def unit_checker():
     if unit_tocheck == "":
         #print("You chose {}".format(unit_tocheck))
         return unit_tocheck
-
-    elif unit_tocheck == "T" or unit_tocheck.lower() in tablespoon:
+    elif unit_tocheck == "T" or unit_tocheck == "Tbsp" or unit_tocheck.lower() in tablespoon:
         return "tbs"
     elif unit_tocheck.lower() in teaspoon:
         return "tsp"
@@ -156,7 +157,7 @@ def unit_checker():
     elif unit_tocheck.lower() in pound:
         return "pound"
     elif unit_tocheck.lower() in grams:
-        return "g'"
+        return "g"
 
 # Main Routine
 
@@ -253,8 +254,33 @@ for recipe_line in full_recipe:
 
     num_space = recipe_line.count(" ")
     if num_space > 1:
+        # item has unit and ingredient
+        unit = get_unit[0]
         ingredient = get_unit[1]
-        # convert into g
+        unit = unit_checker(unit)
+
+        # if unit is already in grams, add it to list
+        if unit == "g":
+            modernised_recipe.append("{:.0f} g {}".format(amount,ingredient))
+            continue
+
+        # convert to mls if possible...
+        amount = general_converter(amount, unit, unit_central, 1)
+
+        # If we converted to mls, try to convert to grams
+        if amount[1] == "yes":
+            amount_2 = general_converter(amount[0], ingredient, food_dictionary, 250)
+
+            # if the ingredient is in the list, convert it
+            if amount_2[1] == "yes":
+                modernised_recipe.append("{:.0f} g {}".format(amount_2[0], ingredient))
+
+            # if the ingredient is not in the list, leave the unit as ml
+            else:
+                modernised_recipe.append("{:.0f} ml {}".format(amount[0], ingredient))
+                continue
+
+
     else:
         modernised_recipe.append("{} {}".format(amount, unit_ingredient))
         continue
