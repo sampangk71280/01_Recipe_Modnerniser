@@ -1,6 +1,5 @@
 # modules to be used...
 
-# *USABILITY* TESTING AND SHARING VIDEO
 import csv
 import re
 

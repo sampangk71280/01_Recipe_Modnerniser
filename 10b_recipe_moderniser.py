@@ -1,6 +1,5 @@
 # modules to be used...
 
-# *USABILITY* TESTING AND SHARING VIDEO
 import csv
 import re
 
@@ -128,7 +127,7 @@ def unit_checker(raw_unit):
     cup = ["cup", "c", "cups"]
     pint = ["pint", "p", "pt", "fl-pt", "pints"]
     quart = ["q", "qt", "fl-qt", "quarts"]
-    ml = ["milliliter", "millilitre", "cc", "mL", "millitres", "milliters"]
+    ml = ["milliliter", "millilitre", "cc", "mL", "millitres", "milliters", "ml"]
     l = ["litre", "liter", "L", "liters"]
     dl = ["deciliter", "decilire", "dL"]
     pound = ["lb", "#", "pounds"]
@@ -248,7 +247,6 @@ for recipe_line in full_recipe:
             modernised_recipe.append(recipe_line)
             continue
 
-
         unit_ingredient = get_amount[1]
 
     # Get unit and ingredient...
@@ -284,7 +282,6 @@ for recipe_line in full_recipe:
             else:
                 modernised_recipe.append("{:.0f} ml {}".format(amount[0], ingredient))
                 continue
-
 
     else:
         modernised_recipe.append("{} {}".format(amount, unit_ingredient))
