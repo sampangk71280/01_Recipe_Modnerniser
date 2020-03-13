@@ -52,7 +52,6 @@ def num_check(question):
 def get_sf():
     serving_size = num_check("What is the recipe serving size? ")
 
-    # Main routine goes here
     dodgy_sf = "yes"
     while dodgy_sf == "yes":
 
@@ -61,16 +60,16 @@ def get_sf():
         scale_factor = desired_size / serving_size
 
         if scale_factor < 0.25:
-            dodgy_sf = input("Warning: This scale factor is very small"
-                             "and you might struggle to accurately weigh"
+            dodgy_sf = input("Warning: This scale factor is very small "
+                             "and you might struggle to accurately weigh "
                              "the ingredients \n"
-                             "Do you want to keep going (type 'no' to change"
+                             "Do you want to keep going (type 'no' to change "
                              "your desired serving size")
         elif scale_factor > 4:
-            dodgy_sf = input("Warning: This sclae facor is quite large - ytou might"
+            dodgy_sf = input("Warning: This scale factor is quite large - tou might "
                              "have issues with mixing bowl space and oven space. \n"
                              "Do you want to keep going (type 'no to change "
-                             "your desired serving size)")
+                             "your desired serving size)").lower()
         else:
             dodgy_sf = "no"
 
@@ -82,8 +81,10 @@ def get_all_ingredients():
 
     # Loop to ask users to enter an ingredient
     stop = ""
+    print()
     print("Please enter ingredients one line at a time. Press 'xxx' to when "
           "you done.")
+    print()
     while stop != "xxx":
         # Ask user for ingredient (via not blank function)
         get_ingredient = not_blank("Recipe Line: ",
@@ -195,7 +196,7 @@ for row in csv_groceries:
 modernised_recipe = []
 
 # ask user for recipe name and check its not blank
-recipe_name = not_blank("What is the recipe name? ",
+recipe_name = not_blank("Where is the recipe name? ",
                    "The recipe name can't be blank and can't contain numbers.",
                    "no")
 
@@ -204,14 +205,17 @@ source = not_blank("Where is the recipe from? ",
                    "The recipe source can't be blank.",
                    "yes")
 
+print()
 # get serving sizes and scale factor
 scale_factor = get_sf()
 
 # get amounts, units, amd ingredients from user...
 full_recipe = get_all_ingredients()
 
+
 # Split each line of the recipe into amount, unit, and ingredient...
 mixed_regex = "\d{1,3}\s\d{1,3}\/\d{1,3}"
+
 
 for recipe_line in full_recipe:
     recipe_line =  recipe_line.strip()
@@ -286,21 +290,16 @@ for recipe_line in full_recipe:
         modernised_recipe.append("{} {}".format(amount, unit_ingredient))
         continue
 
-    modernised_recipe.append("{} {} {}".format(amount, unit, ingredient))
+    #modernised_recipe.append("{} {} {}".format(amount, unit, ingredient))
 
  # Put updated ingredient in list
+
+print()
+print("===== {} Recipe =====".format(recipe_name))
+print("Source: {}".format(source))
+print()
+print("--- Ingredients (scaled by a factor of {}) ---".format(scale_factor))
 
 # Output ingredient list
 for item in modernised_recipe:
     print(item)
-
-# Loop for each ingredient ...
-
-# get ingredient amount
-# get ingredient name
-# get unit
-# convert unit to ml
-# convert from ml to g
-# put updated ingredient in list
-
-# output ingredient list
